@@ -8,7 +8,7 @@ router.get("/", (req, res) => {
   // find all products
   // be sure to include its associated Category and Tag data
   Product.findAll({
-    attributes: ["id", "product_name", "price", "stock"],
+    attributes: ["id", "product_name", "price", "stock", "category_id"],
     include: [
       {
         model: Category,
@@ -31,11 +31,11 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
-  PProduct.findOne({
+  Product.findOne({
     where: {
       id: req.params.id,
     },
-    attributes: ["id", "product_name", "price", "stock"],
+    attributes: ["id", "product_name", "price", "stock", "category_id"],
     include: [
       {
         model: Category,
@@ -49,7 +49,7 @@ router.get("/:id", (req, res) => {
   })
     .then((dbProductData) => {
       if (!dbProductData) {
-        res.status(404).json({ message: "There is no product with that id" });
+        res.status(404).json({ message: "There's no product with that id" });
         return;
       }
       res.json(dbProductData);
